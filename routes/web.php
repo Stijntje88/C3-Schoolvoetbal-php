@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\BaseController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +26,6 @@ Route::get('/user', function(){
 Route::get('/user/{user}', [BaseController::class, 'user'])->name('profiles.user');
 
 Route::post('/logout', [BaseController::class, 'logout'])->name('logout');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
