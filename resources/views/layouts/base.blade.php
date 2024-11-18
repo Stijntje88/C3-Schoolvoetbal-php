@@ -8,11 +8,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <header class="border-2 p-10">
+<body class="bg-green-700">
+    <header class="border-b-2 p-8">
         <nav>
             @guest
-            <div class="flex justify-between">
+            <div class="flex justify-around">
+                <a href="{{route('home')}}"><img class="h-16 border-2 rounded-lg" src="{{asset('img/4s-logo.png')}}" alt="logo"></a>
                 <div class="flex justify-evenly w-3/5">
                     <a href="">Home</a>
                     <a href="">Wedstrijd Schema</a>
@@ -29,6 +30,7 @@
             @auth
             <div class="flex justify-between">
                 <div class="flex justify-evenly w-3/5">
+                    <a href="{{route('home')}}"><img class="h-16 border-2 rounded-lg" src="{{asset('img/4s-logo.png')}}" alt="logo"></a>
                     <a href="">Home</a>
                     <a href="">Wedstrijd Schema</a>
                     <a href="">Scores</a>
@@ -46,10 +48,10 @@
             @endauth
         </nav>
     </header>
-    <main class="w-4/5 mx-auto mt-32 py-12">
+    <main class="w-4/5 mx-auto my-32 py-12">
         {{$slot}}
     </main>
-    <footer class="border-2 p-5 bottom-0">
+    <footer class="border-t-2 p-5 bottom-0">
         <p>&copy;All copy rights reserved. ERIC, $TIJN EN JORT.</p>
     </footer>
 </body>
