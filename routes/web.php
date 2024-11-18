@@ -36,4 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\TeamsController;
+
+Route::get('/teambeheer', [TeamsController::class, 'index'])->name('teams.index');
+Route::post('/teambeheer', [TeamsController::class, 'store'])->name('teams.store');
+
+
 require __DIR__.'/auth.php';

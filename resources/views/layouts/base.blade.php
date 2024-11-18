@@ -36,7 +36,7 @@
                     <a href="">Scores</a>
                     <a href="">Leaderboard</a>
                     <a href="">Mijn team</a>
-                    <a href="">Team beheer</a>
+                    <a href="{{route('teams.index')}}">Team beheer</a>
                 </div>
                 <div class="flex justify-end w-1/5">
                     <form action="{{route('logout')}}" method="post">
