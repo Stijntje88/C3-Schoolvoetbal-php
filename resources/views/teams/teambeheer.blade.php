@@ -5,14 +5,24 @@
             <ul class="bg-white shadow-md rounded p-4 space-y-2">
                 @forelse($teams as $team)
                     <li class="pb-2">
-                        <h3 class="text-lg font-semibold text-gray-800">{{ $team->name }}</h3>
-                        <p class="text-sm text-gray-700">Gemaakt door: {{ $user->name }}</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">{{ $team->name }}</h3>
+                                <p class="text-sm text-gray-700">Gemaakt door: {{ $user->name }}</p>
+                            </div>
+                            <a href="{{ route('teams.edit', $team->id) }}"
+                               class="text-blue-600 hover:text-blue-800 font-medium">
+                               Bewerken
+                            </a>
+                        </div>
                     </li>
                 @empty
                     <li class="text-gray-500">Er zijn nog geen teams aangemaakt.</li>
                 @endforelse
             </ul>
         </div>
+    </div>
+
 
         <div>
             <h2 class="text-xl font-bold mb-4">Team Aanmaken</h2>
