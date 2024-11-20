@@ -10,11 +10,15 @@ class TeamsController extends Controller
 {
     public function index()
     {
-        // Haal alle teams op, inclusief de gebruikers die ze hebben aangemaakt
-        $teams = Team::with('user')->get();
+        $user = Auth::user();
+        $teams = Team::all();
+        return view('teams.teambeheer', ['teams' => $teams, 'user' => $user]);
+    }
 
-        // Toon de teambeheer pagina
-        return view('teams.teambeheer', compact('teams'));
+    public function mijnTeam()
+    {
+        $mijnTeam = Auth::user()->team;
+        return view('teams.mijnTeam', ['mijnTeam' => $mijnTeam]);
     }
 
     public function store(Request $request)
@@ -32,4 +36,3 @@ class TeamsController extends Controller
         return redirect()->route('teams.index')->with('success', 'Team succesvol aangemaakt!');
     }
 }
-

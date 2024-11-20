@@ -4,55 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$title ?? '4s tournament website'}}</title>
+    <title>{{ $title ?? '4S Tournament Website' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-green-700">
-    <header class="border-b-2 p-8">
-        <nav>
-            @guest
-            <div class="flex justify-around">
-                <a href="{{route('home')}}"><img class="h-16 border-2 rounded-lg" src="{{asset('img/4s-logo.png')}}" alt="logo"></a>
-                <div class="flex justify-evenly w-3/5">
-                    <a href="">Home</a>
-                    <a href="">Wedstrijd Schema</a>
-                    <a href="">Scores</a>
-                    <a href="">Leaderboard</a>
-                </div>
-                <div class="flex justify-end w-1/5">
-                    <a class="mr-2" href="{{route('login')}}">Login</a> |
-                    <a class="ml-2" href="{{route('register')}}">Register</a>
-                </div>
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-green-500 text-white shadow-md">
+        <nav class="w-4/5 mx-auto py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <div>
+                <a href="{{ route('home') }}">
+                    <img class="h-12" src="{{ asset('img/4s-logo.png') }}" alt="4S Logo">
+                </a>
             </div>
-            @endguest
 
-            @auth
-            <div class="flex justify-between">
-                <div class="flex justify-evenly w-3/5">
-                    <a href="{{route('home')}}"><img class="h-16 border-2 rounded-lg" src="{{asset('img/4s-logo.png')}}" alt="logo"></a>
-                    <a href="">Home</a>
-                    <a href="">Wedstrijd Schema</a>
-                    <a href="">Scores</a>
-                    <a href="">Leaderboard</a>
-                    <a href="">Mijn team</a>
-                    <a href="{{route('teams.index')}}">Team beheer</a>
-                </div>
-                <div class="flex justify-end w-1/5">
-                    <form action="{{route('logout')}}" method="post">
-                        @csrf
-                        <input type="submit" value="Logout">
-                    </form>
-                </div>
+            <!-- Navigation Links -->
+            <div class="flex space-x-6 items-center">
+                @guest
+                <a href="#" class="hover:text-green-800">Home</a>
+                <a href="#" class="hover:text-green-800">Wedstrijd Schema</a>
+                <a href="#" class="hover:text-green-800">Scores</a>
+                <a href="#" class="hover:text-green-800">Leaderboard</a>
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-white text-green-500 rounded-md hover:bg-green-600 hover:text-white">Login</a>
+                <a href="{{ route('register') }}" class="px-4 py-2 border border-white rounded-md text-white hover:bg-white hover:text-green-500">Register</a>
+                @endguest
+
+                @auth
+                <a href="{{ route('home') }}" class="hover:text-green-800">Home</a>
+                <a href="#" class="hover:text-green-800">Wedstrijd Schema</a>
+                <a href="#" class="hover:text-green-800">Scores</a>
+                <a href="#" class="hover:text-green-800">Leaderboard</a>
+                <a href="{{ route('teams.mijnTeam') }}" class="hover:text-green-800">Mijn Team</a>
+                <a href="{{ route('teams.index') }}" class="hover:text-green-800">Team Beheer</a>
+                @if (Auth::user() && Auth::user()->role == 'admin')
+                <a href="#" class="hover:text-green-800">Admin Panel</a>
+                @endif
+
+                @if (Auth::user() && Auth::user()->role == 'referee')
+                <a href="#" class="hover:text-green-800">Add Scores</a>
+                @endif
+                <form action="{{ route('logout') }}" method="post" class="inline">
+                    @csrf
+                    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Logout</button>
+                </form>
+                @endauth
             </div>
-            @endauth
         </nav>
     </header>
-    <main class="w-4/5 mx-auto my-32 py-12">
-        {{$slot}}
+
+    <main class="w-4/5 mx-auto my-44 p-10 bg-white shadow-md rounded-lg">
+        {{ $slot }}
     </main>
-    <footer class="border-t-2 p-5 bottom-0">
-        <p>&copy;All copy rights reserved. ERIC, $TIJN EN JORT.</p>
+
+    <footer class="bg-green-500 text-white fixed w-full">
+        <div class="w-4/5 mx-auto py-4 flex justify-between items-center">
+            <p>&copy; 2024 Eric, Tijn en Jort. All rights reserved.</p>
+            <a href="#top" class="text-sm hover:text-green-800">Back to top</a>
+        </div>
     </footer>
 </body>
 

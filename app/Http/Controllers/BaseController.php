@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 class BaseController extends Controller
 {
     public function home(){
-        return view('home');
+        $user = Auth::user();
+        return view('home', ['user' => $user]);
     }
 
     public function user(){

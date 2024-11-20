@@ -31,11 +31,16 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $mijnTeam = new Team;
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+
+        $mijnTeam =Team::create([
+            'name' =>$request->name,
+            'players' => [''],
         ]);
 
         $user = User::create([
@@ -44,10 +49,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'team_id' => $mijnTeam->id,
         ]);
-        $mijnTeam = Team::create([
-            'name' => '',
-            'user_id' => Auth::id(), // Zorg ervoor dat Auth::id() een geldige gebruiker retourneert
-        ]);
+
 
 
         event(new Registered($user));

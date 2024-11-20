@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'team_id',
     ];
 
     /**
@@ -44,6 +45,6 @@ class User extends Authenticatable
     ];
 
     public function team(){
-        $this->hasOne(Team::class);
+        return $this->belongsTo(Team::class);
     }
 }

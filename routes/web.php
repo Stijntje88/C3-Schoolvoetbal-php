@@ -40,6 +40,7 @@ use App\Http\Controllers\TeamsController;
 
 Route::get('/teambeheer', [TeamsController::class, 'index'])->name('teams.index');
 Route::post('/teambeheer', [TeamsController::class, 'store'])->name('teams.store');
+Route::get('/mijn-team', [TeamsController::class, 'mijnTeam'])->name('teams.mijnTeam');
 
 
 require __DIR__.'/auth.php';
