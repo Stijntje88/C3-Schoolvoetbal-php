@@ -38,23 +38,22 @@ class RegisteredUserController extends Controller
         ]);
 
 
-        $mijnTeam =Team::create([
-            'name' =>$request->name,
-            'players' => [''],
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'team_id' => $mijnTeam->id,
         ]);
-
 
 
         event(new Registered($user));
 
         Auth::login($user);
+
+        $mijnTeam = Team::create([
+            'name' =>$request->name,
+            'players' => json_encode(['']),
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect(RouteServiceProvider::HOME);
     }
