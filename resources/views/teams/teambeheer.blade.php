@@ -24,7 +24,7 @@
     </div>
 
 
-        <div>
+        <!-- <div>
             <h2 class="text-xl font-bold mb-4">Team Aanmaken</h2>
             <form method="POST" action="{{ route('teams.store') }}" class="bg-white shadow-md rounded p-4">
                 @csrf
@@ -39,5 +39,5 @@
                 </button>
             </form>
         </div>
-    </div>
+    </div> -->
 </x-base-layout>

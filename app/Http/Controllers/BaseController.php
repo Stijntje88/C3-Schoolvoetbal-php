@@ -27,7 +27,7 @@ class BaseController extends Controller
         $tournaments = Tournament::all();
         $games = Game::all();
 
-        return view('admin.adminPanel', ['games' => $games, 'teams' => $teams, 'users' => $users,  ]);
+        return view('admin.adminPanel', ['games' => $games, 'teams' => $teams, 'users' => $users, 'tournaments' => $tournaments ]);
     }
 
     public function logout(User $user){
@@ -35,7 +35,35 @@ class BaseController extends Controller
         return view('home');
     }
 
+    public function index(){
+        $users = User::all();
+        $teams = Team::all();
+        return view('users.index', ['users' => $users]);
+    }
+
     public function userEdit(User $user){
         return view('users.userEdit', ['user' => $user]);
+    }
+
+    public function userUpdate(Request $request, User $user){
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'role' => ['required'],
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('users.index');
+    }
+
+    public function userDestroy(User $user){
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }

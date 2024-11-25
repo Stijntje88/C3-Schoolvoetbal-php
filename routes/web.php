@@ -4,6 +4,9 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TournamentsController;
+use App\Models\Tournament;
+use Faker\Provider\Base;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,16 +20,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [BaseController::class, 'home'])->name('home');
-
-Route::get('/home', [BaseController::class, 'home'])->name('home');
-
-Route::get('/user', function(){
+Route::get('/user', function () {
     return redirect()->route('profiles.user', Auth::id());
 });
 
-Route::get('/user/{user}', [BaseController::class, 'user'])->name('profiles.user');
-Route::get('/user/{user}/edit', [BaseController::class, 'userEdit'])->name('users.edit');
+
+
+Route::get('/', [BaseController::class, 'home'])->name('home');
+Route::get('/home', [BaseController::class, 'home'])->name('home');
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/users', [BaseController::class, 'index'])->name('users.index');
+    Route::get('/admin/user/{user}/edit', [BaseController::class, 'userEdit'])->name('users.edit');
+    Route::put('/admin/user/{user}/edit', [BaseController::class, 'userUpdate'])->name('users.update');
+    Route::delete('/admin/user/{user}/delete', [BaseController::class, 'userDestroy'])->name('users.delete');
+    Route::get('/adminPanel', [BaseController::class, 'admin'])->name('admin.adminPanel');
+
+    Route::get('/admin/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
+    Route::get('/admin/tournament/{tournament}/edit', [TournamentsController::class, 'edit'])->name('tournaments.edit');
+    Route::put('/admin/tournament/{tournament}/edit', [TournamentsController::class, 'update'])->name('tournaments.update');
+});
+
+
 
 
 Route::post('/logout', [BaseController::class, 'logout'])->name('logout');
@@ -52,4 +69,4 @@ Route::put('/teams/{team}', [TeamsController::class, 'update'])->name('teams.upd
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
