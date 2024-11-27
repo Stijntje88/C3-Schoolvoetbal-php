@@ -14,4 +14,12 @@ class Tournament extends Model
         'max_teams',
         'started'
     ];
+
+    public function teams(){
+        return $this->hasMany(Team::class);
+    }
+
+    public function games(){
+        return $this->hasMany(Game::class);
+    }
 }
