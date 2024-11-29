@@ -15,6 +15,10 @@ class Team extends Model
         'players',
     ];
 
+    protected $casts = [
+        'players' => 'array',
+    ];
+
     // Relatie met de User
     public function user()
     {
