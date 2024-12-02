@@ -25,6 +25,7 @@ class TeamsController extends Controller
 
 
 
+
     public function mijnTeam()
     {
         $mijnTeam = Auth::user()->team;
@@ -62,5 +63,13 @@ class TeamsController extends Controller
     public function destroy(Team $team){
         $team->delete();
         return redirect()->route('teams.index');
+    }
+    public function wedstrijdSchema()
+    {
+        // Haal alle wedstrijden op met de benodigde relatie-informatie
+        $games = Game::with(['team1', 'team2'])->get();
+
+        // Stuur de wedstrijden naar de view
+        return view('wedstrijd.Wedstrijdschema', compact('games'));
     }
 }

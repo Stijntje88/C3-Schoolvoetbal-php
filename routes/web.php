@@ -58,6 +58,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/tournament/create', [TournamentsController::class, 'create'])->name('tournaments.create');
     Route::post('/admin/tournament/create', [TournamentsController::class, 'store'])->name('tournaments.store');
 
+
+    Route::get('/wedstrijdschema', [TeamsController::class, 'wedstrijdSchema'])->name('wedstrijdschema');
+
+
     Route::get('/generateMatches', [GamesController::class, 'generateMatches'])->name('generate.matches');
 
 });
