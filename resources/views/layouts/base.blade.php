@@ -60,7 +60,7 @@
                 @endif
 
                 @if (Auth::user() && Auth::user()->role == 'referee')
-                <a href="#" class="hover:text-green-800">Add Scores</a>
+                <a href="{{ route('referee.scores') }}" class="hover:text-green-800">Add Scores</a>
                 @endif
                 <form action="{{ route('logout') }}" method="post" class="inline">
                     @csrf

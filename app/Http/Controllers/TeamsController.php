@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
@@ -14,17 +15,13 @@ class TeamsController extends Controller
         $teams = Team::all();
         return view('teams.teambeheer', ['teams' => $teams, 'user' => $user]);
     }
-    public function edit($id)
-{
-    $team = Team::find($id); // Zorg ervoor dat het juiste team wordt opgehaald.
-
-    if (!$team) {
-        // Redirect of toon een foutmelding als het team niet bestaat.
-        return redirect()->route('teams.index')->withErrors('Team niet gevonden.');
+    public function edit(Team $team)
+    {
+        if (!$team) {
+            return redirect()->route('teams.index')->withErrors('Team niet gevonden.');
+        }
+        return view('teams.edit', ['team' => $team]);
     }
-
-    return view('teams.edit', compact('team'));
-}
 
 
 
@@ -49,9 +46,21 @@ class TeamsController extends Controller
         return redirect()->route('teams.index')->with('success', 'Team succesvol aangemaakt!');
     }
 
-    public function update(Request $request, $id){
-        $team = Team::find($id);
-        $team->update($request->all());
+    public function update(Request $request, Team $team)
+    {
+       $request->validate([
+        'name' => ['string', 'required']
+       ]);
+
+       $team->update([
+        'name' => $request->name,
+        'players' => $request->players,
+       ]);
         return redirect()->route('teams.index')->with('success', 'Team succesvol aangepast');
+    }
+
+    public function destroy(Team $team){
+        $team->delete();
+        return redirect()->route('teams.index');
     }
 }
