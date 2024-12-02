@@ -28,7 +28,7 @@
                 <label for="players" class="block text-sm font-medium text-gray-700">Spelers</label>
                 <textarea id="players" name="players" rows="4"
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                  {{ $team->players }}</textarea>
+                {{ $team->players }}</textarea>
             </div>
 
 
@@ -47,18 +47,16 @@
                     disabled>
             </div>
 
+            <input type="submit" class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-blue-700" value="Opslaan">
 
-            <div>
-                <button type="submit"
-                    class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-blue-700">
-                    Opslaan
-                </button>
-                <form action="{{route('teams.delete', $team)}}" method="post">
-                    @csrf
-                    @method('DELETE')
 
-                    <input type="submit" value="Verwijder team" class="bg-red-600 text-black px-4 py-2 rounded shadow hover:bg-red-700">
-                </form>
-                <a href="{{ route('teams.index') }}" class="text-blue-600 hover:text-blue-800">Terug naar teambeheer</a>
+            <a href="{{ route('teams.index') }}" class="text-blue-600 hover:text-blue-800">Terug naar teambeheer</a>
+        </form>
+        <form action="{{route('teams.delete', $team)}}" method="post">
+            @csrf
+            @method('DELETE')
+
+            <input type="submit" value="Verwijder team" class="bg-red-600 text-black px-4 py-2 rounded shadow hover:bg-red-700">
+        </form>
 
 </x-base-layout>
