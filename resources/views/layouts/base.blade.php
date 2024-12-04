@@ -67,6 +67,9 @@
                     <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Logout</button>
                 </form>
                 @endauth
+                <li class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                    <a href="{{ route('profile.edit') }}" class="btn btn-primary">Profiel aanpassen</a>
+
             </div>
         </nav>
     </header>
