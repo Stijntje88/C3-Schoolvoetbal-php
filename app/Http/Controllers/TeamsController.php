@@ -53,7 +53,7 @@ class TeamsController extends Controller
         'name' => ['string', 'required']
        ]);
 
-       $players = explode(',', $request->players);
+       $players = explode(", ", $request->players);
 
        $team->update([
         'name' => $request->name,

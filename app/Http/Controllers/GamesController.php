@@ -33,4 +33,29 @@ class GamesController extends Controller
         $games = Game::all();
         return redirect()->route('home');
     }
+
+
+    public function scoresTonen(){
+        $games = Game::all();
+        return view('referee.scores', ['games' => $games]);
+    }
+
+    public function addScores(){
+        $games = Game::all();
+        return view('referee.addScores', ['games' => $games]);
+    }
+
+    public function storeScores(Request $request, Game $game){
+        $request->validate([
+            'team1' => ['integer'],
+            'team2' => ['integer']
+        ]);
+
+        $game->update([
+            'team_1_score' => $request->team1,
+            'team_2_score' => $request->team2,
+        ]);
+
+        return redirect()->route('referee.scores');
+    }
 }
