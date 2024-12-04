@@ -22,15 +22,17 @@
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm"
                     required>
             </div>
-
+            @if ($team->players)
+            @php
+            $players = implode(",", json_decode($team->players, true));
+            @endphp
+            @endif
 
             <div>
                 <label for="players" class="block text-sm font-medium text-gray-700">Spelers</label>
-                <textarea id="players" name="players" rows="4"
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                {{ $team->players }}</textarea>
+                <textarea id="players" name="players" rows="4" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm" placeholder="Er moet een komma tussen elke speler kommen">@if ($team->players){{$players}}
+                @endif</textarea>
             </div>
-
 
             <div>
                 <label for="created_at" class="block text-sm font-medium text-gray-700">Gemaakt op</label>
@@ -47,12 +49,15 @@
                     disabled>
             </div>
 
-            <input type="submit" class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-blue-700" value="Opslaan">
+            <div class="flex justify-between w-72">
+                <input type="submit" class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-blue-700" value="Opslaan">
 
+                <a href="{{ route('teams.index') }}" class="text-blue-600 hover:text-blue-800">Terug naar teambeheer</a>
+            </div>
 
-            <a href="{{ route('teams.index') }}" class="text-blue-600 hover:text-blue-800">Terug naar teambeheer</a>
         </form>
-        <form action="{{route('teams.delete', $team)}}" method="post">
+
+        <form action="{{route('teams.delete', $team)}}" method="post" class="mt-4">
             @csrf
             @method('DELETE')
 

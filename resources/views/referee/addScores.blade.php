@@ -1,18 +1,24 @@
 <x-base-layout>
-    <form action="" method="post" class="mx-auto w-3/5">
+    <form action="{{ route('referee.storeScores') }}" method="post" class="mx-auto w-3/5">
+        @csrf
         <div class="grid grid-cols-3 gap-2 mb-6">
             @foreach ($games as $game)
             <div>
-                <label for="team1" class="font-bold text-xl flex flex-col">{{$game->team1->name}}</label>
-                <input type="number" name="team1" id="team1" value="{{$game->team1->team_1_score}}">
+                <label class="font-bold text-xl flex flex-col">
+                    {{ $game->team1->name }}
+                    <input type="number" name="scores[{{ $game->id }}][team1]" value="{{ $game->team_1_score }}" required>
+                </label>
             </div>
 
             <h1 class="flex justify-center items-center">VS</h1>
 
             <div>
-                <label for="team2" class="font-bold text-xl flex flex-col">{{$game->team2->name}}</label>
-                <input type="number" name="team2" id="team2" value="{{$game->team1->team_2_score}}">
+                <label class="font-bold text-xl flex flex-col">
+                    {{ $game->team2->name }}
+                    <input type="number" name="scores[{{ $game->id }}][team2]" value="{{ $game->team_2_score }}" required>
+                </label>
             </div>
+            <input type="hidden" name="scores[{{ $game->id }}][game_id]" value="{{ $game->id }}">
             @endforeach
         </div>
 

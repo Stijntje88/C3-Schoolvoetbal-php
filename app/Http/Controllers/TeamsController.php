@@ -53,9 +53,11 @@ class TeamsController extends Controller
         'name' => ['string', 'required']
        ]);
 
+       $players = explode(',', $request->players);
+
        $team->update([
         'name' => $request->name,
-        'players' => $request->players,
+        'players' => json_encode($players),
        ]);
         return redirect()->route('teams.index')->with('success', 'Team succesvol aangepast');
     }

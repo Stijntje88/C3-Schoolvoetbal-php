@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/referee/scores', [BaseController::class, 'scoresTonen'])->name('referee.scores');
     Route::get('/referee/addScores', [BaseController::class, 'addScores'])->name('referee.addScores');
+    Route::post('/referee/addScores', [BaseController::class, 'storeScores'])->name('referee.storeScores');
 
 
     Route::get('/teambeheer', [TeamsController::class, 'index'])->name('teams.index');

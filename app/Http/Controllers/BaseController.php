@@ -11,41 +11,48 @@ use Illuminate\Support\Facades\Auth;
 
 class BaseController extends Controller
 {
-    public function home(){
+    public function home()
+    {
         $user = Auth::user();
         return view('home', ['user' => $user]);
     }
 
-    public function user(){
+    public function user()
+    {
         $users = User::all();
         return view('users.user', ['users' => $users]);
     }
 
-    public function admin(){
+    public function admin()
+    {
         $teams =  Team::all();
         $users = User::all();
         $tournaments = Tournament::all();
         $games = Game::all();
 
-        return view('admin.adminPanel', ['games' => $games, 'teams' => $teams, 'users' => $users, 'tournaments' => $tournaments ]);
+        return view('admin.adminPanel', ['games' => $games, 'teams' => $teams, 'users' => $users, 'tournaments' => $tournaments]);
     }
 
-    public function logout(User $user){
+    public function logout(User $user)
+    {
         Auth::logout($user);
         return view('home');
     }
 
-    public function index(){
+    public function index()
+    {
         $users = User::all();
         $teams = Team::all();
         return view('users.index', ['users' => $users]);
     }
 
-    public function userEdit(User $user){
+    public function userEdit(User $user)
+    {
         return view('users.userEdit', ['user' => $user]);
     }
 
-    public function userUpdate(Request $request, User $user){
+    public function userUpdate(Request $request, User $user)
+    {
         $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
@@ -61,32 +68,40 @@ class BaseController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function userDestroy(User $user){
+    public function userDestroy(User $user)
+    {
         $user->delete();
 
         return redirect()->route('users.index');
     }
 
-    public function scoresTonen(){
+    public function scoresTonen()
+    {
         $games = Game::all();
         return view('referee.scores', ['games' => $games]);
     }
 
-    public function addScores(){
+    public function addScores()
+    {
         $games = Game::all();
         return view('referee.addScores', ['games' => $games]);
     }
 
-    public function storeScores(Request $request, Game $game){
-        $request->validate([
-            'team1' => ['integer'],
-            'team2' => ['integer']
+    public function storeScores(Request $request)
+    {
+        $data = $request->validate([
+            'scores' => 'required|array',
+            'scores.*.team1' => 'required|integer',
+            'scores.*.team2' => 'required|integer',
+            'scores.*.game_id' => 'required|exists:games,id',
         ]);
 
-        $game->update([
-            'team_1_score' => $request->team1,
-            'team_2_score' => $request->team2,
-        ]);
+        foreach ($data['scores'] as $score) {
+            Game::where('id', $score['game_id'])->update([
+                'team_1_score' => $score['team1'],
+                'team_2_score' => $score['team2'],
+            ]);
+        }
 
         return redirect()->route('referee.scores');
     }
