@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/generateMatches', [GamesController::class, 'generateMatches'])->name('generate.matches');
+    Route::get('/scores-only', [GamesController::class, 'onlyScores'])->name('scores.only');
+
 
 });
 
