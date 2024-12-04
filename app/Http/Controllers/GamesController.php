@@ -8,10 +8,17 @@ use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
-    public function index(){
-        $games = Game::all();
-        return view('games.index', ['games' => $games]);
-    }
+    public function index()
+{
+    // Alleen wedstrijden ophalen zonder scores
+    $games = Game::whereNull('team_1_score')
+                ->whereNull('team_2_score')
+                ->get();
+    return view('games.index', ['games' => $games]);
+}
+
+
+
 
     public function generateMatches(){
         $teams = Team::all();
@@ -58,4 +65,10 @@ class GamesController extends Controller
 
         return redirect()->route('referee.scores');
     }
+    public function onlyScores()
+{
+    $games = Game::all(['team_1', 'team_2', 'team_1_score', 'team_2_score']);
+    return view('scores.index', ['games' => $games]);
+}
+
 }
