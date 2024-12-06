@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
 
         $mijnTeam = Team::create([
             'name' =>$request->name,
-            'players' => json_encode(['']),
+            'players' => json_encode([]),
             'user_id' => Auth::id(),
         ]);
 
