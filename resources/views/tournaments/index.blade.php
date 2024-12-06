@@ -12,24 +12,23 @@
             </thead>
             <tbody>
                 @forelse ($tournaments as $tournament)
-                    <tr class="border-t">
-                        <td class="px-4 py-2">{{ $tournament->id }}</td>
-                        <td class="px-4 py-2">{{ $tournament->title }}</td>
-                        <td class="px-20 py-2">{{ $tournament->max_teams }}</td>
-                        <td class="px-4 py-2 flex space-x-2">
-                            <a href="{{route('tournaments.edit', $tournament)}}" class="text-blue-600 hover:text-blue-800 font-medium">EDIT</a>
-                            <form action="" method="post" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="text-red-600 hover:text-red-800 font-medium">DELETE</button>
-                            </form>
-                        </td>
-                    </tr>
+                <tr class="border-t">
+                    <td class="px-4 py-2">{{ $tournament->id }}</td>
+                    <td class="px-4 py-2">{{ $tournament->title }}</td>
+                    <td class="px-20 py-2">{{ $tournament->max_teams }}</td>
+                    <td class="px-4 py-2 flex space-x-2">
+                        <a href="{{route('tournaments.edit', $tournament)}}" class="text-blue-600 hover:text-blue-800 font-medium">EDIT</a>
+                        <form action="{{route('tournament.delete', $tournament)}}" method="post" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="DELETE" class="text-red-600 hover:text-red-800 font-medium">
+                        </form>
+                    </td>
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="3" class="text-center text-gray-500 py-4">Geen toernooien gevonden.</td>
-                    </tr>
+                <tr>
+                    <td colspan="3" class="text-center text-gray-500 py-4">Geen toernooien gevonden.</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>

@@ -22,4 +22,22 @@
             </ul>
         </div>
     </div>
+
+
+        <!-- <div>
+            <h2 class="text-xl font-bold mb-4">Team Aanmaken</h2>
+            <form method="POST" action="{{ route('teams.store') }}" class="bg-white shadow-md rounded p-4">
+                @csrf
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Teamnaam</label>
+                    <input type="text" id="name" name="name"
+                           class="w-full border-gray-300 text-gray-700 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           required>
+                </div>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Team Aanmaken
+                </button>
+            </form>
+        </div>
+    </div> -->
 </x-base-layout>

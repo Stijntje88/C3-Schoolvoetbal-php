@@ -49,4 +49,9 @@ class TournamentsController extends Controller
 
         return redirect()->route('tournaments.index');
     }
+
+    public function destroy(Tournament $tournament){
+        $tournament->delete();
+        return redirect()->route('tournaments.index');
+    }
 }
