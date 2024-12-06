@@ -61,6 +61,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/wedstrijdschema', [TeamsController::class, 'wedstrijdSchema'])->name('wedstrijdschema');
+    Route::get('/wedstrijdschema/tournament', [TeamsController::class, 'tournaments'])->name('wedstrijdschema.tournament');
+    Route::get('/wedstrijdschema/tournamentsView/{tournament}', [TeamsController::class, 'tournamentsView'])->name('wedstrijdschema.tournaments.view');
 
 
     Route::get('/generateMatches', [GamesController::class, 'generateMatches'])->name('generate.matches');
