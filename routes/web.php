@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/admin/tournaments', [TournamentsController::class, 'index'])->name('tournaments.index');
+    Route::get('/admin/teambeheer', [TeamsController::class, 'adminTeambeheer'])->name('admin.teambeheer');
     Route::get('/admin/tournament/{tournament}/edit', [TournamentsController::class, 'edit'])->name('tournaments.edit');
     Route::put('/admin/tournament/{tournament}/edit', [TournamentsController::class, 'update'])->name('tournaments.update');
     Route::get('/admin/tournament/create', [TournamentsController::class, 'create'])->name('tournaments.create');

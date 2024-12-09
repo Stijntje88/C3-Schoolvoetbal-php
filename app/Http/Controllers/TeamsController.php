@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamsController extends Controller
 {
-    public function index()
+    public function adminTeambeheer()
     {
         $user = Auth::user();
         $teams = Team::all();
@@ -25,6 +25,11 @@ class TeamsController extends Controller
     }
 
 
+    public function index(){
+        $user = Auth::user();
+        $teams = Team::where('user_id', $user->id)->get();
+        return view('teams.teambeheer', ['teams' => $teams]);
+    }
 
 
     public function mijnTeam()
