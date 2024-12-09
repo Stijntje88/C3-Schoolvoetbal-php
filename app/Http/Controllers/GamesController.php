@@ -10,14 +10,16 @@ use Illuminate\Http\Request;
 class GamesController extends Controller
 {
     public function index()
-{
-    // Alleen wedstrijden ophalen zonder scores
-    $games = Game::whereNull('team_1_score')
-                ->whereNull('team_2_score')
-                ->get();
-    return view('games.index', ['games' => $games]);
-}
-public function leaderboard($tournament_id)
+    {
+        // Alleen wedstrijden ophalen zonder scores
+        $games = Game::whereNull('team_1_score')
+                    ->whereNull('team_2_score')
+                    ->get();
+
+        return view('games.index', ['games' => $games]);
+    }
+
+    public function leaderboard($tournament_id)
     {
         // Haal alle wedstrijden voor dit toernooi op
         $games = Game::where('tournament_id', $tournament_id)
@@ -54,22 +56,22 @@ public function leaderboard($tournament_id)
         return view('games.leaderboard', ['leaderboard' => $leaderboard]);
     }
 
-    public function show(){
+    public function show()
+    {
         $tournaments = Tournament::all();
+
         return view('games.leaderboardhome', ['tournaments' => $tournaments]);
     }
 
-
-
-
-    public function generateMatches(){
+    public function generateMatches(Request $request)
+    {
         $teams = Team::all();
 
-        foreach($teams as $team_1){
+        foreach ($teams as $team_1) {
             $i = $team_1->id;
-            foreach($teams as $team_2){
+            foreach ($teams as $team_2) {
                 $j = $team_2->id;
-                if($j > $i){
+                if ($j > $i) {
                     $game = Game::create([
                         'team_1' => $i,
                         'team_2' => $j,
@@ -79,22 +81,25 @@ public function leaderboard($tournament_id)
             }
         }
 
-        $games = Game::all();
         return redirect()->route('home');
     }
 
-
-    public function scoresTonen(){
+    public function scoresTonen()
+    {
         $games = Game::all();
+
         return view('referee.scores', ['games' => $games]);
     }
 
-    public function addScores(){
+    public function addScores()
+    {
         $games = Game::all();
+
         return view('referee.addScores', ['games' => $games]);
     }
 
-    public function storeScores(Request $request, Game $game){
+    public function storeScores(Request $request, Game $game)
+    {
         $request->validate([
             'team1' => ['integer'],
             'team2' => ['integer']
@@ -107,10 +112,29 @@ public function leaderboard($tournament_id)
 
         return redirect()->route('referee.scores');
     }
+
     public function onlyScores()
+    {
+        $games = Game::all(['team_1', 'team_2', 'team_1_score', 'team_2_score']);
+
+        return view('scores.index', ['games' => $games]);
+    }
+    // Haal alle games zonder scores in JSON-formaat
+public function getGamesJson()
+{
+    $games = Game::whereNull('team_1_score')
+                 ->whereNull('team_2_score')
+                 ->get();
+
+    return response()->json($games);
+}
+
+// Haal de resultaten van alle games in JSON-formaat
+public function getResultsJson()
 {
     $games = Game::all(['team_1', 'team_2', 'team_1_score', 'team_2_score']);
-    return view('scores.index', ['games' => $games]);
+
+    return response()->json($games);
 }
 
 }

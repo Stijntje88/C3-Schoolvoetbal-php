@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,9 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+
+
+use App\Http\Controllers\GamesController;
+
+Route::get('/games', [GamesController::class, 'getGamesJson']); // Voor alle games (wedstrijdinfo)
+Route::get('/results', [GamesController::class, 'getResultsJson']); // Alleen de resultaten
+
+
+
 
 
 
