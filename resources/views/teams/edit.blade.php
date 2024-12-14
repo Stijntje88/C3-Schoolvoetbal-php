@@ -24,13 +24,13 @@
             </div>
             @if ($team->players)
             @php
-            $players = implode(",", json_decode($team->players, true));
+            $players = implode(", ", json_decode($team->players, true));
             @endphp
             @endif
 
             <div>
                 <label for="players" class="block text-sm font-medium text-gray-700">Spelers</label>
-                <textarea id="players" name="players" rows="4" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm" placeholder="Er moet een komma tussen elke speler kommen">@if ($team->players){{$players}}
+                <textarea id="players" name="players" rows="4" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm" placeholder="Er moet een komma tussen elke speler kommen">@if ($team->players){{ $players }}
                 @endif</textarea>
             </div>
 

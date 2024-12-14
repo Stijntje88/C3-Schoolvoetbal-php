@@ -10,18 +10,17 @@ use Illuminate\Http\Request;
 class GamesController extends Controller
 {
     public function index()
-{
-    // Alleen wedstrijden ophalen zonder scores
-    $games = Game::whereNull('team_1_score')
-                ->whereNull('team_2_score')
-                ->get();
-    return view('games.index', ['games' => $games]);
-}
-public function leaderboard($tournament_id)
+    {
+        // Alleen wedstrijden ophalen zonder scores
+        $games = Game::whereNull('team_1_score')
+            ->whereNull('team_2_score')
+            ->get();
+        return view('games.index', ['games' => $games]);
+    }
+    public function leaderboard($tournament_id)
     {
         // Haal alle wedstrijden voor dit toernooi op
-        $games = Game::where('tournament_id', $tournament_id)
-                    ->get();
+        $games = Game::where('tournament_id', $tournament_id)->get();
 
         // Maak een array voor de scores van de teams
         $teamScores = [];
@@ -45,7 +44,7 @@ public function leaderboard($tournament_id)
         $teams = Team::whereIn('id', array_keys($teamScores))->get();
 
         // Voeg de scores toe aan de teams en sorteer ze op score
-        $leaderboard = $teams->map(function($team) use ($teamScores) {
+        $leaderboard = $teams->map(function ($team) use ($teamScores) {
             $team->score = $teamScores[$team->id];
             return $team;
         })->sortByDesc('score'); // Sorteer van hoog naar laag
@@ -54,26 +53,26 @@ public function leaderboard($tournament_id)
         return view('games.leaderboard', ['leaderboard' => $leaderboard]);
     }
 
-    public function show(){
+    public function show()
+    {
         $tournaments = Tournament::all();
         return view('games.leaderboardhome', ['tournaments' => $tournaments]);
     }
 
 
-
-
-    public function generateMatches(){
+    public function generateMatches(Tournament $tournament)
+    {
         $teams = Team::all();
 
-        foreach($teams as $team_1){
+        foreach ($teams as $team_1) {
             $i = $team_1->id;
-            foreach($teams as $team_2){
+            foreach ($teams as $team_2) {
                 $j = $team_2->id;
-                if($j > $i){
+                if ($j > $i) {
                     $game = Game::create([
                         'team_1' => $i,
                         'team_2' => $j,
-                        'tournament_id' => 1,
+                        'tournament_id' => $tournament->id,
                     ]);
                 }
             }
@@ -84,17 +83,20 @@ public function leaderboard($tournament_id)
     }
 
 
-    public function scoresTonen(){
+    public function scoresTonen()
+    {
         $games = Game::all();
         return view('referee.scores', ['games' => $games]);
     }
 
-    public function addScores(){
+    public function addScores()
+    {
         $games = Game::all();
         return view('referee.addScores', ['games' => $games]);
     }
 
-    public function storeScores(Request $request, Game $game){
+    public function storeScores(Request $request, Game $game)
+    {
         $request->validate([
             'team1' => ['integer'],
             'team2' => ['integer']
@@ -107,10 +109,14 @@ public function leaderboard($tournament_id)
 
         return redirect()->route('referee.scores');
     }
-    public function onlyScores()
-{
-    $games = Game::all(['team_1', 'team_2', 'team_1_score', 'team_2_score']);
-    return view('scores.index', ['games' => $games]);
-}
+    public function onlyScores(Tournament $tournament)
+    {
+        $games = Game::where('tournament_id', $tournament->id)->get();
+        return view('scores.scores', ['games' => $games]);
+    }
 
+    public function scoresIndex(){
+        $tournaments = Tournament::all();
+        return view('scores.index', ['tournaments'=> $tournaments]);
+    }
 }

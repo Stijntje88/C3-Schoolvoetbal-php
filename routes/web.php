@@ -31,6 +31,13 @@ Route::get('/user', function () {
 Route::get('/', [BaseController::class, 'home'])->name('home');
 Route::get('/home', [BaseController::class, 'home'])->name('home');
 
+Route::get('/games/{tournament_id}/leaderboard', [GamesController::class, 'leaderboard'])->name('games.leaderboard');
+Route::get('/leaderboard/home', [GamesController::class, 'show'])->name('leaderboard.home');
+Route::get('/scores-only/{tournament}', [GamesController::class, 'onlyScores'])->name('scores.only');
+Route::get('/scores', [GamesController::class, 'scoresIndex'])->name('scores.index');
+Route::get('/wedstrijdschema', [TeamsController::class, 'wedstrijdSchema'])->name('wedstrijdschema');
+Route::get('/wedstrijdschema/tournament/{tournament}', [TeamsController::class, 'wedstrijdtournaments'])->name('wedstrijdschema.tournament');
+
 
 
 Route::middleware('auth')->group(function () {
@@ -43,6 +50,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/referee/scores', [BaseController::class, 'scoresTonen'])->name('referee.scores');
     Route::get('/referee/addScores', [BaseController::class, 'addScores'])->name('referee.addScores');
     Route::post('/referee/addScores', [BaseController::class, 'storeScores'])->name('referee.storeScores');
+    Route::get('/addTeam', [BaseController::class, 'userAddTeam'])->name('user.addTeam');
+    Route::post('/addTeam', [BaseController::class, 'storeTeam'])->name('user.storeTeam');
+    Route::get('/addScores/{game}', [BaseController::class, 'addScores'])->name('scores.addScores');
+    Route::post('/addScores/{game}', [BaseController::class, 'storeScores'])->name('scores.store');
 
 
     Route::get('/teambeheer', [TeamsController::class, 'index'])->name('teams.index');
@@ -61,20 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/tournament/create', [TournamentsController::class, 'store'])->name('tournaments.store');
     Route::delete('/admin/tournament/delete/{tournament}', [TournamentsController::class, 'destroy'])->name('tournament.delete');
 
-
-    Route::get('/wedstrijdschema', [TeamsController::class, 'wedstrijdSchema'])->name('wedstrijdschema');
-    Route::get('/wedstrijdschema/tournament', [TeamsController::class, 'tournaments'])->name('wedstrijdschema.tournament');
-    Route::get('/wedstrijdschema/tournamentsView/{tournament}', [TeamsController::class, 'tournamentsView'])->name('wedstrijdschema.tournaments.view');
-
-
-    Route::get('/generateMatches', [GamesController::class, 'generateMatches'])->name('generate.matches');
-    Route::get('/scores-only', [GamesController::class, 'onlyScores'])->name('scores.only');
-
-    Route::get('/games/{tournament_id}/leaderboard', [GamesController::class, 'leaderboard'])->name('games.leaderboard');
-    Route::get('/leaderboard/home', [GamesController::class, 'show'])->name('leaderboard.home');
-
-
-
+    Route::get('/generateMatches/{tournament}', [BaseController::class, 'generateMatches'])->name('generate.matches');
 });
 
 
