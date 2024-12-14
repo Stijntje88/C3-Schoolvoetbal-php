@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MatchController;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,9 +17,17 @@ use App\Http\Controllers\MatchController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+
+
+use App\Http\Controllers\GamesController;
+
+Route::get('/games', [GamesController::class, 'getGamesJson']); // Voor alle games (wedstrijdinfo)
+Route::get('/results', [GamesController::class, 'getResultsJson']); // Alleen de resultaten
+
+
+
 
 Route::get('/matches/scores', [MatchController::class, 'getMatchScores']);
 

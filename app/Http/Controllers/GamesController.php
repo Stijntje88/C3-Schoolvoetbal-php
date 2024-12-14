@@ -56,6 +56,7 @@ class GamesController extends Controller
     public function show()
     {
         $tournaments = Tournament::all();
+
         return view('games.leaderboardhome', ['tournaments' => $tournaments]);
     }
 
@@ -78,20 +79,20 @@ class GamesController extends Controller
             }
         }
 
-        $games = Game::all();
         return redirect()->route('home');
     }
-
 
     public function scoresTonen()
     {
         $games = Game::all();
+
         return view('referee.scores', ['games' => $games]);
     }
 
     public function addScores()
     {
         $games = Game::all();
+
         return view('referee.addScores', ['games' => $games]);
     }
 
