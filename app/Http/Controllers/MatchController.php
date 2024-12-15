@@ -17,6 +17,7 @@ class MatchController extends Controller
                 'team_2' => $game->team2->name,
                 'team_1_score' => $game->team_1_score,
                 'team_2_score' => $game->team_2_score,
+                'tournament_id' => $game->tournament_id,
             ];
         });
 

@@ -36,9 +36,9 @@
                 <a href="{{ route('home') }}" class="hover:text-green-800">Home</a>
                 <a href="{{ route('wedstrijdschema') }}" class="hover:text-green-800">Wedstrijd Schema</a>
                 <a href="{{ route('teams.mijnTeam') }}" class="hover:text-green-800">Mijn Team</a>
-                <a href="{{ route('teams.index') }}" class="hover:text-green-800">Team Beheer</a>
 
                 @if (Auth::user() && Auth::user()->role == 'admin')
+                <a href="{{ route('teams.index') }}" class="hover:text-green-800">Team Beheer</a>
                 <a href="{{ route('admin.teambeheer') }}" class="hover:text-green-800">Alle teams</a>
                 <div class="relative group">
                     <!-- Fixed Admin Panel Link -->
